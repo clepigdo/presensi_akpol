@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Absensi;
 use App\Models\Absensi_mhs;
-use Carbon\Carbon; 
+use Carbon\Carbon;
+use Inertia\Inertia; 
 
 class MahasiswaController extends Controller
 {
@@ -23,6 +24,13 @@ class MahasiswaController extends Controller
         $riwayat_absen = Absensi_mhs::where('user_id', $user_id)
                                 ->orderBy('tanggal', 'desc')
                                 ->get();
+        return Inertia::render('Mahasiswa/Dashboard', [
+        'cek_absen' => $cek_absen,
+        'riwayat_absen' => $riwayat_absen,
+        'flash' => [
+            'success' => session('success')
+        ] 
+    ]);
 
         return view('user.dashboard', compact('cek_absen', 'riwayat_absen'));
     }
