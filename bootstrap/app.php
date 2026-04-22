@@ -15,6 +15,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleCheck::class,
         ]);
+        $middleware->alias([
+            'role' => \App\Http\Middleware\RoleCheck::class,
+            'profile.completed' => \App\Http\Middleware\CekProfile::class, // Baris ini yang ditambahkan
+        ]);
         $middleware->web(append: [
         \App\Http\Middleware\HandleInertiaRequests::class,
     ]);

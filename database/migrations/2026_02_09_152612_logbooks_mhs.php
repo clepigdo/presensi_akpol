@@ -19,6 +19,7 @@ return new class extends Migration
         $table->text('deskripsi_kegiatan');
         $table->string('foto_kegiatan')->nullable();
         $table->enum('status_verifikasi', ['pending', 'disetujui', 'ditolak'])->default('pending');
+        $table->boolean('is_draft')->default(true);
         $table->text('catatan_mentor')->nullable();
         $table->timestamps();
     });

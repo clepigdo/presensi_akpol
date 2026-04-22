@@ -23,7 +23,6 @@ const ParticleCanvas = () => {
         for (let x = 0; x < canvas.width; x += spacing) {
             for (let y = 0; y < canvas.height; y += spacing) {
                 if (Math.random() > 0.7) {
-                    // Mengurangi jumlah titik agar lebih bersih
                     dots.push({
                         x,
                         y,
@@ -91,12 +90,12 @@ export default function Login({ status, canResetPassword }) {
             <ParticleCanvas />
 
             {/* --- Background Ambience --- */}
-            <div className="fixed inset-0 pointer-events-none">
+            <div className="fixed inset-0 pointer-events-none z-0">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,#0A1E3A_0%,#050A18_100%)]" />
                 <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(212,160,23,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(212,160,23,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
             </div>
 
-            {/* --- Header Nav (Fixed Top) --- */}
+            {/* --- Header Nav (Fixed Top h-20) --- */}
             <nav className="fixed top-0 left-0 right-0 z-50 h-20 px-6 md:px-12 flex items-center justify-between border-b border-akpol-gold/10 bg-[#050A18]/90 backdrop-blur-md">
                 <Link href="/" className="flex items-center gap-3 group">
                     <img
@@ -120,32 +119,35 @@ export default function Login({ status, canResetPassword }) {
                     <div className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse shadow-[0_0_5px_#22C55E]" />
                 </div>
             </nav>
-            <main className="min-h-screen w-full flex flex-col items-center justify-center relative z-10 px-4 py-20">
-                {/* CONTAINER UTAMA */}
+
+            {/* PERBAIKAN: flex-1 dan pt-24 memastikan konten di tengah ruang di bawah navbar */}
+            <main className="flex-1 w-full flex flex-col items-center justify-center relative z-10 px-4 pt-24 pb-12">
+                {/* Lebar container tetap 400px untuk login */}
                 <div className="w-full max-w-[400px]">
-                    {/* Logo & Title Section */}
+                    {/* PERBAIKAN: Spasi dan ukuran logo disamakan 100% dengan Register */}
                     <motion.div
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8 }}
-                        className="text-center mb-8"
+                        className="text-center mb-5"
                     >
-                        <div className="relative w-20 h-20 mx-auto mb-5 flex items-center justify-center">
+                        <div className="relative w-16 h-16 mx-auto mb-3 flex items-center justify-center">
                             <div className="absolute inset-0 border border-akpol-gold/20 rounded-full animate-[spin_10s_linear_infinite]" />
                             <div className="absolute inset-2 border border-akpol-gold/10 rounded-full animate-[spin_15s_linear_infinite_reverse]" />
                             <img
                                 src="../images/Logo_Akademi_Kepolisian.png"
                                 alt="Logo"
-                                className="w-12 h-12 object-contain drop-shadow-[0_0_15px_rgba(212,160,23,0.5)]"
+                                className="w-10 h-10 object-contain drop-shadow-[0_0_15px_rgba(212,160,23,0.5)]"
                             />
                         </div>
-                        <h1 className="font-cinzel text-2xl font-black tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-b from-akpol-gold to-[#B8860B]">
+                        <h1 className="font-cinzel text-xl md:text-2xl font-black tracking-[0.2em] text-transparent bg-clip-text bg-gradient-to-b from-akpol-gold to-[#B8860B]">
                             SIAK MAGANG
                         </h1>
-                        <p className="font-tech text-[10px] text-akpol-slate/50 tracking-[0.4em] mt-2 uppercase">
+                        <p className="font-tech text-[9px] text-akpol-slate/50 tracking-[0.4em] mt-1 uppercase">
                             LOGIN
                         </p>
                     </motion.div>
+
                     <motion.div
                         initial={{ opacity: 0, scale: 0.95 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -154,14 +156,18 @@ export default function Login({ status, canResetPassword }) {
                     >
                         <div className="absolute -inset-[1px] bg-gradient-to-b from-akpol-gold/30 to-transparent rounded-lg opacity-50 blur-sm pointer-events-none" />
 
-                        <div className="relative bg-[#0A1428]/95 backdrop-blur-xl border border-akpol-gold/10 rounded-lg p-8 shadow-2xl">
+                        <div className="relative bg-[#0A1428]/95 backdrop-blur-xl border border-akpol-gold/10 rounded-lg p-6 md:p-8 shadow-2xl">
+                            {/* Flash Message Status */}
                             {status && (
-                                <div className="mb-6 p-3 rounded bg-green-500/10 border border-green-500/20 text-center font-tech text-[10px] text-green-400 tracking-wide">
+                                <div className="mb-6 p-3 rounded bg-green-500/10 border border-green-500/20 text-center font-tech text-[10px] text-green-400 tracking-wide leading-relaxed">
                                     {status}
                                 </div>
                             )}
 
-                            <form onSubmit={submit} className="space-y-5">
+                            <form
+                                onSubmit={submit}
+                                className="flex flex-col gap-4"
+                            >
                                 {/* Email Input */}
                                 <div className="space-y-1.5">
                                     <label className="block font-cinzel text-[9px] font-bold tracking-[0.15em] text-akpol-slate/70 uppercase">
@@ -175,12 +181,12 @@ export default function Login({ status, canResetPassword }) {
                                                 setData("email", e.target.value)
                                             }
                                             placeholder="nomor@akpol.ac.id"
-                                            className={`w-full bg-[#050A18] border ${errors.email ? "border-red-500/50" : "border-akpol-gold/15"} rounded text-white font-tech text-sm tracking-wide py-3 px-4 outline-none focus:border-akpol-gold/50 focus:bg-[#0F1A30] transition-all placeholder:text-gray-700`}
+                                            className={`w-full bg-[#050A18] border ${errors.email ? "border-red-500/50" : "border-akpol-gold/15"} rounded text-white font-tech text-sm tracking-wide py-2.5 px-4 outline-none focus:border-akpol-gold/50 focus:bg-[#0F1A30] transition-all placeholder:text-gray-700`}
                                             required
                                         />
                                     </div>
                                     {errors.email && (
-                                        <p className="font-tech text-[9px] text-red-400 mt-1 uppercase tracking-wide">
+                                        <p className="font-tech text-[8px] text-red-400 uppercase tracking-wide">
                                             {errors.email}
                                         </p>
                                     )}
@@ -204,7 +210,7 @@ export default function Login({ status, canResetPassword }) {
                                                 )
                                             }
                                             placeholder="••••••••"
-                                            className={`w-full bg-[#050A18] border ${errors.password ? "border-red-500/50" : "border-akpol-gold/15"} rounded text-white font-tech text-sm tracking-wide py-3 px-4 pr-10 outline-none focus:border-akpol-gold/50 focus:bg-[#0F1A30] transition-all placeholder:text-gray-700`}
+                                            className={`w-full bg-[#050A18] border ${errors.password ? "border-red-500/50" : "border-akpol-gold/15"} rounded text-white font-tech text-sm tracking-wide py-2.5 px-4 pr-10 outline-none focus:border-akpol-gold/50 focus:bg-[#0F1A30] transition-all placeholder:text-gray-700`}
                                             required
                                         />
                                         <button
@@ -252,7 +258,7 @@ export default function Login({ status, canResetPassword }) {
                                         </button>
                                     </div>
                                     {errors.password && (
-                                        <p className="font-tech text-[9px] text-red-400 mt-1 uppercase tracking-wide">
+                                        <p className="font-tech text-[8px] text-red-400 uppercase tracking-wide">
                                             {errors.password}
                                         </p>
                                     )}
@@ -302,18 +308,21 @@ export default function Login({ status, canResetPassword }) {
                                 </div>
 
                                 {/* Submit Button */}
-                                <button
-                                    type="submit"
-                                    disabled={processing}
-                                    className="w-full py-3.5 bg-gradient-to-r from-[#B8860B] to-[#F0C040] rounded text-[#050A18] font-cinzel font-bold text-[11px] tracking-[0.2em] uppercase hover:shadow-[0_0_15px_rgba(212,160,23,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50"
-                                >
-                                    {processing
-                                        ? "Memproses..."
-                                        : "Masuk Sistem"}
-                                </button>
+                                <div className="pt-2">
+                                    <button
+                                        type="submit"
+                                        disabled={processing}
+                                        className="w-full py-3 bg-gradient-to-r from-[#B8860B] to-[#F0C040] rounded text-[#050A18] font-cinzel font-bold text-[11px] tracking-[0.2em] uppercase hover:shadow-[0_0_15px_rgba(212,160,23,0.3)] hover:scale-[1.01] active:scale-[0.99] transition-all disabled:opacity-50"
+                                    >
+                                        {processing
+                                            ? "Memproses..."
+                                            : "Masuk Sistem"}
+                                    </button>
+                                </div>
                             </form>
                         </div>
-                        <div className="mt-6 text-center opacity-30 font-tech text-[8px] tracking-[0.2em]">
+
+                        <div className="mt-5 text-center opacity-30 font-tech text-[8px] tracking-[0.2em]">
                             SECURE CONNECTION // AES-256
                         </div>
                     </motion.div>

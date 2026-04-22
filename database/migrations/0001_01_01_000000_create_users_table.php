@@ -21,6 +21,11 @@ return new class extends Migration
             $table->enum('role', ['admin', 'mahasiswa'])->default('mahasiswa');
             $table->string('instansi_asal')->nullable();
             $table->string('foto_profil')->nullable();
+            $table->string('no_hp')->nullable();
+            $table->string('jenis_kelamin', 1)->nullable();
+            $table->text('alamat_domisili')->nullable();
+            $table->longText('face_data')->nullable();
+            $table->boolean('is_profile_completed')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

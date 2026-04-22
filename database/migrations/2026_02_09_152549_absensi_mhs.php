@@ -17,11 +17,11 @@ return new class extends Migration
             $table->date('tanggal');
             $table->time('jam_masuk');
             $table->time('jam_pulang')->nullable();
-            $table->decimal('lat_masuk', 10, 8);
-            $table->decimal('long_masuk', 11, 8);
+            $table->decimal('lat_masuk', 10, 8)->nullable();
+            $table->decimal('long_masuk', 11, 8)->nullable();
             $table->decimal('lat_pulang', 10, 8)->nullable();
             $table->decimal('long_pulang', 11, 8)->nullable();
-            $table->string('foto_masuk');
+            $table->string('foto_masuk')->nullable(); 
             $table->string('foto_pulang')->nullable();
             $table->enum('status', ['hadir', 'terlambat', 'izin'])->default('hadir');
             $table->timestamps();

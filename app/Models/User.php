@@ -30,6 +30,11 @@ class User extends Authenticatable
         'password',
         'role',
         'instansi_asal',
+        'no_hp',
+        'jenis_kelamin',
+        'alamat_domisili',
+        'face_data',
+        'is_profile_completed',
     ];
 
     /**
